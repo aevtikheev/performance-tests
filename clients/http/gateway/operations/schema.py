@@ -131,8 +131,8 @@ class GetOperationsSummaryQuerySchema(BaseModel):
     account_id: str = Field(alias="accountId")
 
 
-class OperationRequestSchema(BaseModel):
-    """Общие данные для создания операции."""
+class MakeFeeOperationRequestSchema(BaseModel):
+    """Структура данных для создания операции списания комиссии."""
 
     model_config = ConfigDict(populate_by_name=True)
 
@@ -142,31 +142,68 @@ class OperationRequestSchema(BaseModel):
     account_id: str = Field(alias="accountId")
 
 
-class MakeFeeOperationRequestSchema(OperationRequestSchema):
-    """Структура данных для создания операции списания комиссии."""
-
-
-class MakeTopUpOperationRequestSchema(OperationRequestSchema):
+class MakeTopUpOperationRequestSchema(BaseModel):
     """Структура данных для создания операции пополнения."""
 
+    model_config = ConfigDict(populate_by_name=True)
 
-class MakeCashbackOperationRequestSchema(OperationRequestSchema):
+    status: OperationStatus
+    amount: float
+    card_id: str = Field(alias="cardId")
+    account_id: str = Field(alias="accountId")
+
+
+class MakeCashbackOperationRequestSchema(BaseModel):
     """Структура данных для создания операции начисления кешбэка."""
 
+    model_config = ConfigDict(populate_by_name=True)
 
-class MakeTransferOperationRequestSchema(OperationRequestSchema):
+    status: OperationStatus
+    amount: float
+    card_id: str = Field(alias="cardId")
+    account_id: str = Field(alias="accountId")
+
+
+class MakeTransferOperationRequestSchema(BaseModel):
     """Структура данных для создания операции перевода."""
 
+    model_config = ConfigDict(populate_by_name=True)
 
-class MakePurchaseOperationRequestSchema(OperationRequestSchema):
+    status: OperationStatus
+    amount: float
+    card_id: str = Field(alias="cardId")
+    account_id: str = Field(alias="accountId")
+
+
+class MakePurchaseOperationRequestSchema(BaseModel):
     """Структура данных для создания операции покупки."""
 
+    model_config = ConfigDict(populate_by_name=True)
+
+    status: OperationStatus
+    amount: float
+    card_id: str = Field(alias="cardId")
+    account_id: str = Field(alias="accountId")
     category: str
 
 
-class MakeBillPaymentOperationRequestSchema(OperationRequestSchema):
+class MakeBillPaymentOperationRequestSchema(BaseModel):
     """Структура данных для создания операции оплаты счёта."""
 
+    model_config = ConfigDict(populate_by_name=True)
 
-class MakeCashWithdrawalOperationRequestSchema(OperationRequestSchema):
+    status: OperationStatus
+    amount: float
+    card_id: str = Field(alias="cardId")
+    account_id: str = Field(alias="accountId")
+
+
+class MakeCashWithdrawalOperationRequestSchema(BaseModel):
     """Структура данных для создания операции снятия наличных."""
+
+    model_config = ConfigDict(populate_by_name=True)
+
+    status: OperationStatus
+    amount: float
+    card_id: str = Field(alias="cardId")
+    account_id: str = Field(alias="accountId")
