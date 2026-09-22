@@ -3,6 +3,7 @@ from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
+from tools.fakers import fake
 
 class OperationType(StrEnum):
     FEE = "FEE"
@@ -136,8 +137,8 @@ class MakeFeeOperationRequestSchema(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    status: OperationStatus
-    amount: float
+    status: OperationStatus = Field(default_factory=lambda: fake.enum(OperationStatus))
+    amount: float= fake.amount()
     card_id: str = Field(alias="cardId")
     account_id: str = Field(alias="accountId")
 
@@ -147,8 +148,8 @@ class MakeTopUpOperationRequestSchema(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    status: OperationStatus
-    amount: float
+    status: OperationStatus = Field(default_factory=lambda: fake.enum(OperationStatus))
+    amount: float = fake.amount()
     card_id: str = Field(alias="cardId")
     account_id: str = Field(alias="accountId")
 
@@ -158,8 +159,8 @@ class MakeCashbackOperationRequestSchema(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    status: OperationStatus
-    amount: float
+    status: OperationStatus = Field(default_factory=lambda: fake.enum(OperationStatus))
+    amount: float = fake.amount()
     card_id: str = Field(alias="cardId")
     account_id: str = Field(alias="accountId")
 
@@ -169,8 +170,8 @@ class MakeTransferOperationRequestSchema(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    status: OperationStatus
-    amount: float
+    status: OperationStatus = Field(default_factory=lambda: fake.enum(OperationStatus))
+    amount: float = fake.amount()
     card_id: str = Field(alias="cardId")
     account_id: str = Field(alias="accountId")
 
@@ -180,11 +181,11 @@ class MakePurchaseOperationRequestSchema(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    status: OperationStatus
-    amount: float
+    status: OperationStatus = Field(default_factory=lambda: fake.enum(OperationStatus))
+    amount: float = fake.amount()
     card_id: str = Field(alias="cardId")
     account_id: str = Field(alias="accountId")
-    category: str
+    category: str = fake.category()
 
 
 class MakeBillPaymentOperationRequestSchema(BaseModel):
@@ -192,8 +193,8 @@ class MakeBillPaymentOperationRequestSchema(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    status: OperationStatus
-    amount: float
+    status: OperationStatus = Field(default_factory=lambda: fake.enum(OperationStatus))
+    amount: float = fake.amount()
     card_id: str = Field(alias="cardId")
     account_id: str = Field(alias="accountId")
 
@@ -203,7 +204,7 @@ class MakeCashWithdrawalOperationRequestSchema(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    status: OperationStatus
-    amount: float
+    status: OperationStatus = Field(default_factory=lambda: fake.enum(OperationStatus))
+    amount: float = fake.amount()
     card_id: str = Field(alias="cardId")
     account_id: str = Field(alias="accountId")
