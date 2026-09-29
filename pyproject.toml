@@ -5,6 +5,7 @@ description = ""
 requires-python = ">=3.12"
 dependencies = [
     "faker>=40.39.0",
+    "gevent>=26.9.0",
     "grpcio>=1.84.0",
     "httpx>=0.28.1",
     "protobuf>=7.36.2",
