@@ -1,6 +1,6 @@
 from httpx import QueryParams, Response
 
-from clients.http.client import HTTPClient
+from clients.http.client import HTTPClient, HTTPClientExtensions
 from clients.http.gateway.client import build_gateway_http_client
 from clients.http.gateway.operations.schema import (
     GetOperationReceiptResponseSchema,
@@ -35,47 +35,54 @@ class OperationsGatewayHTTPClient(HTTPClient):
         """
         Получить список операций по счёту.
 
-        :param query: Pydantic-модель с идентификатором счёта.
-        :return: Ответ от сервера (объект httpx.Response).
+        :param query: Словарь с параметром accountId.
+        :return: Объект httpx.Response с операциями по счёту.
         """
         return self.get(
             "/api/v1/operations",
             params=QueryParams(**query.model_dump(by_alias=True)),
+            # Явно передаём логическое имя маршрута
+            extensions=HTTPClientExtensions(route="/api/v1/operations")
         )
 
-    def get_operations_summary_api(
-        self,
-        query: GetOperationsSummaryQuerySchema,
-    ) -> Response:
+    def get_operations_summary_api(self, query: GetOperationsSummaryQuerySchema) -> Response:
         """
         Получить сводку операций по счёту.
 
-        :param query: Pydantic-модель с идентификатором счёта.
-        :return: Ответ от сервера (объект httpx.Response).
+        :param query: Словарь с параметром accountId.
+        :return: Объект httpx.Response с агрегированной информацией.
         """
         return self.get(
             "/api/v1/operations/operations-summary",
             params=QueryParams(**query.model_dump(by_alias=True)),
+            # Явно передаём логическое имя маршрута
+            extensions=HTTPClientExtensions(route="/api/v1/operations/operations-summary")
         )
 
     def get_operation_api(self, operation_id: str) -> Response:
         """
         Получить операцию по идентификатору.
 
-        :param operation_id: Идентификатор операции.
-        :return: Ответ от сервера (объект httpx.Response).
+        :param operation_id: Уникальный идентификатор операции.
+        :return: Объект httpx.Response с данными об операции.
         """
-        return self.get(f"/api/v1/operations/{operation_id}")
+        return self.get(
+            f"/api/v1/operations/{operation_id}",
+            # Явно передаём логическое имя маршрута
+            extensions=HTTPClientExtensions(route="/api/v1/operations/{operation_id}")
+        )
 
     def get_operation_receipt_api(self, operation_id: str) -> Response:
         """
         Получить чек по операции.
 
-        :param operation_id: Идентификатор операции.
-        :return: Ответ от сервера (объект httpx.Response).
+        :param operation_id: Уникальный идентификатор операции.
+        :return: Объект httpx.Response с чеком по операции.
         """
         return self.get(
             f"/api/v1/operations/operation-receipt/{operation_id}",
+            # Явно передаём логическое имя маршрута
+            extensions=HTTPClientExtensions(route="/api/v1/operations/operation-receipt/{operation_id}")
         )
 
     def make_fee_operation_api(
